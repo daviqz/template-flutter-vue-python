@@ -1,7 +1,15 @@
+import 'package:authorspace/utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:authorspace/screens/home/home.dart';
 import 'package:authorspace/screens/login/login.dart';
+import 'package:authorspace/screens/register/register.dart';
+
+final Map<String, WidgetBuilder> systemRoutes = {
+  '/home': (context) => const Home(),
+  '/register': (context) => const Register(),
+  '/login': (context) => const Login(),
+};
 
 class Routes extends StatelessWidget {
   const Routes({super.key});
@@ -9,24 +17,15 @@ class Routes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-
-        // Define the default brightness and colors.
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.purple,
-          // ···
-          brightness: Brightness.dark,
-        ),
-
-        // Define the default `TextTheme`. Use this to specify the default
-        // text styling for headlines, titles, bodies of text, and more.
+        scaffoldBackgroundColor: ColorsUtils.blackLessDark,
         textTheme: TextTheme(
           displayLarge: const TextStyle(
             fontSize: 72,
             fontWeight: FontWeight.bold,
           ),
-          // ···
           titleLarge: GoogleFonts.oswald(
             fontSize: 30,
             fontStyle: FontStyle.italic,
@@ -35,30 +34,37 @@ class Routes extends StatelessWidget {
           displaySmall: GoogleFonts.pacifico(),
         ),
       ),
+      routes: systemRoutes,
       home: DefaultTabController(
         length: 5,
         child: Scaffold(
-          body: const TabBarView(
-            children: [
-              Home(),
-              Login(),
-              Icon(Icons.directions_bike),
-              Icon(Icons.directions_bike),
-              Icon(Icons.directions_bike),
-            ],
-          ),
-          bottomNavigationBar: Container(
-            // color: Colors.grey,
-            child: TabBar(tabs: [
-              _buildTab(Icons.home, "Home",
-                  Colors.white), // Exemplo de personalização do ícone
-              _buildTab(Icons.travel_explore, "Explore", Colors.white),
-              _buildTab(Icons.favorite_border, "Favorites", Colors.white),
-              _buildTab(Icons.update, "Updates", Colors.white),
-              _buildTab(Icons.settings, "Settings", Colors.white),
-            ], unselectedLabelColor: Colors.white, labelColor: Colors.blue),
-          ),
-        ),
+            body: const TabBarView(
+              children: [
+                Register(),
+                Login(),
+                Home(),
+                Icon(Icons.directions_bike),
+                Icon(Icons.directions_bike),
+              ],
+            ),
+            bottomNavigationBar: TabBar(
+                tabs: [
+                  _buildTab(
+                      Icons.home,
+                      "Home",
+                      ColorsUtils
+                          .whiteSecondary), // Exemplo de personalização do ícone
+                  _buildTab(Icons.travel_explore, "Explore",
+                      ColorsUtils.whiteSecondary),
+                  _buildTab(Icons.favorite_border, "Favorites",
+                      ColorsUtils.whiteSecondary),
+                  _buildTab(
+                      Icons.update, "Updates", ColorsUtils.whiteSecondary),
+                  _buildTab(
+                      Icons.settings, "Settings", ColorsUtils.whiteSecondary),
+                ],
+                unselectedLabelColor: ColorsUtils.whiteSecondary,
+                labelColor: ColorsUtils.blue)),
       ),
     );
   }

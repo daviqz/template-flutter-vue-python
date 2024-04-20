@@ -27,10 +27,19 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: TextField(
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'Email',
+            ),
+          ),
+        ),
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: TextField(
             decoration: InputDecoration(
@@ -40,19 +49,34 @@ class LoginForm extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Email',
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/register');
+            },
+            child: const Text(
+              'Login com Google',
+              style: TextStyle(
+                  color:
+                      ColorsUtils.whiteDark), // Define a cor do texto do botão
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: Text('Login com Google'),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/register');
+            },
+            child: const Text(
+              'Registrar',
+              style: TextStyle(
+                  color:
+                      ColorsUtils.whiteDark), // Define a cor do texto do botão
+            ),
+          ),
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
           child: Center(child: EnterButton()),
         ),

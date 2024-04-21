@@ -21,9 +21,9 @@ class AccountResource:
             "email": request.form.get("email"),
             "password": request.form.get("password"),
         }
-        account = self.account_service.login(**login_form)
+        account_auth = self.account_service.login(**login_form)
 
-        if not account:
+        if not account_auth:
             return make_response("Credenciais inválidas", 401)
 
-        return jsonify(account)
+        return jsonify(account_auth)

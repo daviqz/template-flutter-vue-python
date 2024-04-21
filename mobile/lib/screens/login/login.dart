@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'dart:convert';
 import 'package:authorspace/utils/colors_utils.dart';
 import 'package:authorspace/service/service.dart';
 import 'package:authorspace/widgets/input_form.dart';
+import 'package:authorspace/storage/global_state.dart';
+import 'package:authorspace/models/account_model.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -96,6 +100,7 @@ class _LoginState extends State<Login> {
                   ),
                   onPressed: () {
                     _login(
+                      context,
                       _emailController.text,
                       _passwordController.text,
                     );
@@ -114,7 +119,7 @@ class _LoginState extends State<Login> {
   }
 }
 
-void _login(email, password) async {
+void _login(context, email, password) async {
   try {
     final response = await Service.post('/login', {
       'email': email,
@@ -122,15 +127,13 @@ void _login(email, password) async {
     });
 
     if (response.statusCode == 200) {
-      Fluttertoast.showToast(
-        msg: 'Sucesso: ${response.statusCode}',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-      print('Conteúdo da resposta: ${response.body}');
-      // Faça o que quiser com o conteúdo da resposta aqui
+      Map<String, dynamic> responseBody = jsonDecode(response.body);
+      Account account = Account.fromJson(responseBody['account']);
+      print(account);
+      String token = responseBody['access_token'];
+      GlobalState globalState =
+          Provider.of<GlobalState>(context, listen: false);
+      globalState.updateAuth(token, account);
     } else {
       print('Erro na requisição: ${response.statusCode}');
       Fluttertoast.showToast(

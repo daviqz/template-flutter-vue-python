@@ -1,11 +1,11 @@
-// ignore_for_file: dead_code
-
 import 'package:authorspace/utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:authorspace/screens/home/home.dart';
 import 'package:authorspace/screens/login/login.dart';
 import 'package:authorspace/screens/register/register.dart';
+import 'package:authorspace/storage/global_state.dart';
 
 final Map<String, WidgetBuilder> systemRoutes = {
   '/login': (context) => const Login(),
@@ -17,26 +17,32 @@ class Routes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        // scaffoldBackgroundColor: ColorsUtils.blackLessDark,
-        textTheme: TextTheme(
-          displayLarge: const TextStyle(
-            fontSize: 72,
-            fontWeight: FontWeight.bold,
+    return ChangeNotifierProvider(
+      create: (context) => GlobalState(),
+      child: MaterialApp(
+        title: 'Meu Aplicativo',
+        home: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            useMaterial3: true,
+            // scaffoldBackgroundColor: ColorsUtils.blackLessDark,
+            textTheme: TextTheme(
+              displayLarge: const TextStyle(
+                fontSize: 72,
+                fontWeight: FontWeight.bold,
+              ),
+              titleLarge: GoogleFonts.oswald(
+                fontSize: 30,
+                fontStyle: FontStyle.italic,
+              ),
+              bodyMedium: GoogleFonts.merriweather(),
+              displaySmall: GoogleFonts.pacifico(),
+            ),
           ),
-          titleLarge: GoogleFonts.oswald(
-            fontSize: 30,
-            fontStyle: FontStyle.italic,
-          ),
-          bodyMedium: GoogleFonts.merriweather(),
-          displaySmall: GoogleFonts.pacifico(),
+          routes: systemRoutes,
+          home: const AuthenticationScreen(),
         ),
       ),
-      routes: systemRoutes,
-      home: const AuthenticationScreen(),
     );
   }
 }
@@ -46,11 +52,10 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Verifique se o usuário está logado ou não
-    bool isLoggedIn = false; // Você precisa implementar a lógica de login aqui
+    GlobalState globalState = Provider.of<GlobalState>(context);
+    bool isLoggedIn = globalState.loggedUser != null;
 
     if (isLoggedIn) {
-      // Se o usuário estiver logado, exiba as guias principais
       return DefaultTabController(
         length: 5,
         child: Scaffold(
@@ -77,7 +82,6 @@ class AuthenticationScreen extends StatelessWidget {
         ),
       );
     } else {
-      // Se o usuário não estiver logado, exiba a tela de login
       return const Login();
     }
   }

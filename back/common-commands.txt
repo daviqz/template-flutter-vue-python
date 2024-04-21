@@ -8,7 +8,7 @@ pip install -r requirements.txt
 
 #### Install/Uninstall dep
 pip install dep
-pip uninstall specloud
+pip uninstall dep
 
 
 #### Migration

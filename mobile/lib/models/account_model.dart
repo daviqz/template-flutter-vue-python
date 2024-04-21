@@ -16,4 +16,12 @@ class Account {
       idAccountType: json['idAccountType'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': username,
+      'email': email,
+      'idAccountType': idAccountType,
+    };
+  }
 }

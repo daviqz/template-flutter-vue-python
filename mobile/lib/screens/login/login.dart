@@ -133,8 +133,7 @@ void _login(context, email, password) async {
       String token = responseBody['access_token'];
       GlobalState globalState =
           Provider.of<GlobalState>(context, listen: false);
-      globalState.updateToken(token);
-      globalState.updateLoggedUser(account);
+      globalState.updateAuth(token, account);
     } else {
       print('Erro na requisição: ${response.statusCode}');
       Fluttertoast.showToast(

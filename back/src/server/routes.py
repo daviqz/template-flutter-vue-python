@@ -1,7 +1,24 @@
 from flask import Blueprint
+from resource.account_resource import AccountResource
 
-routes_blueprint = Blueprint('routes', __name__)
+account_resource = AccountResource()
 
-@routes_blueprint.route("/login", methods=['POST'])
-def hello_world():
-    return 'Hello, World!'
+routes = [
+    {
+        "endpoint": "/login",
+        "methods": ["POST"],
+        "function": account_resource.login,
+    },
+    {
+        "endpoint": "/register",
+        "methods": ["POST"],
+        "function": account_resource.register_account,
+    },
+]
+
+routes_blueprint = Blueprint("routes", __name__)
+
+for route in routes:
+    routes_blueprint.route(route["endpoint"], methods=route["methods"])(
+        route["function"]
+    )

@@ -1,11 +1,22 @@
-from flask import Flask
-from routes import routes_blueprint
-from flask_cors import CORS
+from dotenv import load_dotenv
+from flask import Flask, jsonify
+from server_config import server_config
 
+load_dotenv()
 app = Flask(__name__)
-CORS(app)
+
+db, migrate, jwt = server_config(app)
+
+from routes import routes_blueprint
 
 app.register_blueprint(routes_blueprint)
+
+
+@app.errorhandler(Exception)
+def handle_error(error):
+    print(error)
+    return jsonify({"error": "Ocorreu um erro interno no servidor"}), 500
+
 
 if __name__ == "__main__":
     app.run()

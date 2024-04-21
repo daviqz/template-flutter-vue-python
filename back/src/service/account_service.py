@@ -1,7 +1,8 @@
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
-from repository.account_repository import AccountRepository
 from utils.account_utils import validate_fields_register_account, validate_fields_login
+from repository.account_repository import AccountRepository
+from dto.account_dto import AccountDTO
 
 
 class AccountService:
@@ -17,9 +18,11 @@ class AccountService:
             return field_validate
 
         hashed_password = generate_password_hash(password)
-        return self.account_repository.register_account(
+        account_model = self.account_repository.register_account(
             username, email, hashed_password
         )
+        account_dto = AccountDTO.from_model(account_model)
+        return account_dto.to_dictionary()
 
     def login(self, email, password):
         field_validate = validate_fields_login(email, password)
@@ -32,5 +35,9 @@ class AccountService:
         if account_found:
             if check_password_hash(account_found.password, password):
                 access_token = create_access_token(identity=email)
-                return access_token
+                account_dto = AccountDTO.from_model(account_found)
+                return {
+                    "access_token": access_token,
+                    "account": account_dto.to_dictionary(),
+                }
         return None

@@ -1,4 +1,4 @@
-from flask import request, make_response
+from flask import request, make_response, jsonify
 from service.account_service import AccountService
 
 
@@ -13,7 +13,8 @@ class AccountResource:
             "password": request.form.get("password"),
             "password_confirm": request.form.get("passwordConfirm"),
         }
-        return self.account_service.register_account(**register_form)
+        account = self.account_service.register_account(**register_form)
+        jsonify(account)
 
     def login(self):
         login_form = {
@@ -25,4 +26,4 @@ class AccountResource:
         if not account:
             return make_response("Credenciais inválidas", 401)
 
-        return account
+        return jsonify(account)

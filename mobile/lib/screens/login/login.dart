@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:authorspace/utils/colors_utils.dart';
 import 'package:authorspace/service/service.dart';
 import 'package:authorspace/widgets/input_form.dart';
@@ -121,12 +122,33 @@ void _login(email, password) async {
     });
 
     if (response.statusCode == 200) {
+      Fluttertoast.showToast(
+        msg: 'Sucesso: ${response.statusCode}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
       print('Conteúdo da resposta: ${response.body}');
       // Faça o que quiser com o conteúdo da resposta aqui
     } else {
       print('Erro na requisição: ${response.statusCode}');
+      Fluttertoast.showToast(
+        msg: 'Erro na requisição: ${response.statusCode}',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
     }
   } catch (e) {
     print('Erro ao fazer a requisição: $e');
+    Fluttertoast.showToast(
+      msg: 'Erro ao fazer a requisição: $e',
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red,
+      textColor: Colors.white,
+    );
   }
 }

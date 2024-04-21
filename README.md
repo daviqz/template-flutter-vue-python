@@ -14,9 +14,13 @@ Backend Features (flask(Python)): Available services: login and register
 -Separate file for some server configurations 
 -Dotenv
 -Black formatter
+# This template is not ready!! Some things are messy cause It's still a work in progress and I'm currently improving the features and the code.
+# I'd say It's around 50% of what I want to do for finishing this template
 
 Frontend Features (Vue.js(JavaScript)):
 -nothing yet
+# This template is not ready!! I havent even touched It yet.
+# I'd say It's around 0% of what I want to do for finishing this template
 
 Mobile Features (Flutter(Dart)):
 -Conection with api
@@ -27,3 +31,5 @@ Mobile Features (Flutter(Dart)):
 -DefaultTabController shown on authenticated
 -Custom widgets
 -All used colors exported on a separate file (better to deal with possible changes and its easier to see which colors we are using around the app)
+# This template is not ready!! Some things are messy cause It's still a work in progress and I'm currently improving the features and the code.
+# I'd say It's around 40% of what I want to do for finishing this template

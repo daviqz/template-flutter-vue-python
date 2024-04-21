@@ -1,4 +1,7 @@
 from server import db
+from model.association.account_organization_model_association import (
+    AccountOrganizationModelAssociation,
+)
 
 
 class AccountModel(db.Model):
@@ -17,10 +20,19 @@ class AccountModel(db.Model):
     )
     deleted_at = db.Column(db.DateTime(timezone=True))
 
-    account_view_type = db.relationship("AccountType", back_populates="account")
+    account_view_type = db.relationship("AccountTypeModel")
+    organizations = db.relationship(
+        "OrganizationModel",
+        secondary=AccountOrganizationModelAssociation,
+        back_populates="accounts",
+    )
+    memberships = db.relationship(
+        "MembershipModel",
+        back_populates="account",
+    )
 
-    def __init__(self, username, email, password, id_account_type=None):
+    def __init__(self, username, email, password, id_account_view_type=None):
         self.username = username
         self.email = email
         self.password = password
-        self.id_account_type = id_account_type
+        self.id_account_view_type = id_account_view_type

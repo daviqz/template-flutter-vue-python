@@ -1,7 +1,7 @@
 from server import db
 
 
-class AccountTeamAccountTypeModel(db.Model):
+class AccountTeamAccountTypeModelAssociation(db.Model):
     __tablename__ = "account_team_account_type"
 
     id_account = db.Column(db.Integer, db.ForeignKey("account.id"), nullable=False)

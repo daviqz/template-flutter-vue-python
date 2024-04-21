@@ -1,4 +1,7 @@
 from server import db
+from model.association.account_organization_model_association import (
+    AccountOrganizationModelAssociation,
+)
 
 
 class OrganizationModel(db.Model):
@@ -18,5 +21,11 @@ class OrganizationModel(db.Model):
     )
     deleted_at = db.Column(db.DateTime(timezone=True))
 
-    product_type = db.relationship("ProductType", back_populates="organization")
-    account_creator = db.relationship("Account", back_populates="organization")
+    product_type = db.relationship("ProductTypeModel")
+    account_creator = db.relationship("AccountModel")
+    accounts = db.relationship(
+        "AccountModel",
+        secondary=AccountOrganizationModelAssociation,
+        back_populates="organizations",
+    )
+    teams = db.relationship("TeamModel", back_populates="organization")

@@ -1,7 +1,7 @@
 from server import db
 
 
-class AccountOrganizationModel(db.Model):
+class AccountOrganizationModelAssociation(db.Model):
     __tablename__ = "account_organization"
 
     id_account = db.Column(db.Integer, db.ForeignKey("account.id"), nullable=False)

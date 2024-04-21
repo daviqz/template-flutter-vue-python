@@ -1,6 +1,6 @@
 from server import db
-from model.association.account_organization_model_association import (
-    AccountOrganizationModelAssociation,
+from model.association.account_organization_table_association import (
+    account_organization_table_association,
 )
 
 
@@ -10,7 +10,7 @@ class AccountModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), nullable=False)
     email = db.Column(db.String(20), nullable=False)
-    password = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(300), nullable=False)
     id_account_view_type = db.Column(db.Integer, db.ForeignKey("account_type.id"))
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.sql.func.now())
     updated_at = db.Column(
@@ -23,7 +23,7 @@ class AccountModel(db.Model):
     account_view_type = db.relationship("AccountTypeModel")
     organizations = db.relationship(
         "OrganizationModel",
-        secondary=AccountOrganizationModelAssociation,
+        secondary=account_organization_table_association,
         back_populates="accounts",
     )
     memberships = db.relationship(

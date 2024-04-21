@@ -5,7 +5,7 @@ from server_config import server_config
 load_dotenv()
 app = Flask(__name__)
 
-db, migrate = server_config(app)
+db, migrate, jwt = server_config(app)
 
 from routes import routes_blueprint
 

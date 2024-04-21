@@ -1,6 +1,6 @@
 from server import db
-from model.association.account_organization_model_association import (
-    AccountOrganizationModelAssociation,
+from model.association.account_organization_table_association import (
+    account_organization_table_association,
 )
 
 
@@ -25,7 +25,7 @@ class OrganizationModel(db.Model):
     account_creator = db.relationship("AccountModel")
     accounts = db.relationship(
         "AccountModel",
-        secondary=AccountOrganizationModelAssociation,
+        secondary=account_organization_table_association,
         back_populates="organizations",
     )
     teams = db.relationship("TeamModel", back_populates="organization")

@@ -18,7 +18,7 @@ class MembershipModel(db.Model):
     )
     deleted_at = db.Column(db.DateTime(timezone=True))
 
-    team = db.relationship("Team", back_populates="memberships")
+    team = db.relationship("TeamModel", back_populates="memberships")
     account_type = db.relationship("AccountTypeModel")
     account = db.relationship("AccountModel")
 

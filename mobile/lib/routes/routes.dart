@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'package:authorspace/utils/colors_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,9 +8,8 @@ import 'package:authorspace/screens/login/login.dart';
 import 'package:authorspace/screens/register/register.dart';
 
 final Map<String, WidgetBuilder> systemRoutes = {
-  '/home': (context) => const Home(),
-  '/register': (context) => const Register(),
   '/login': (context) => const Login(),
+  '/register': (context) => const Register(),
 };
 
 class Routes extends StatelessWidget {
@@ -20,7 +21,7 @@ class Routes extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        scaffoldBackgroundColor: ColorsUtils.blackLessDark,
+        // scaffoldBackgroundColor: ColorsUtils.blackLessDark,
         textTheme: TextTheme(
           displayLarge: const TextStyle(
             fontSize: 72,
@@ -35,38 +36,50 @@ class Routes extends StatelessWidget {
         ),
       ),
       routes: systemRoutes,
-      home: DefaultTabController(
+      home: const AuthenticationScreen(),
+    );
+  }
+}
+
+class AuthenticationScreen extends StatelessWidget {
+  const AuthenticationScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Verifique se o usuário está logado ou não
+    bool isLoggedIn = false; // Você precisa implementar a lógica de login aqui
+
+    if (isLoggedIn) {
+      // Se o usuário estiver logado, exiba as guias principais
+      return DefaultTabController(
         length: 5,
         child: Scaffold(
-            body: const TabBarView(
-              children: [
-                Register(),
-                Login(),
-                Home(),
-                Icon(Icons.directions_bike),
-                Icon(Icons.directions_bike),
-              ],
-            ),
-            bottomNavigationBar: TabBar(
-                tabs: [
-                  _buildTab(
-                      Icons.home,
-                      "Home",
-                      ColorsUtils
-                          .whiteSecondary), // Exemplo de personalização do ícone
-                  _buildTab(Icons.travel_explore, "Explore",
-                      ColorsUtils.whiteSecondary),
-                  _buildTab(Icons.favorite_border, "Favorites",
-                      ColorsUtils.whiteSecondary),
-                  _buildTab(
-                      Icons.update, "Updates", ColorsUtils.whiteSecondary),
-                  _buildTab(
-                      Icons.settings, "Settings", ColorsUtils.whiteSecondary),
-                ],
-                unselectedLabelColor: ColorsUtils.whiteSecondary,
-                labelColor: ColorsUtils.blue)),
-      ),
-    );
+          body: const TabBarView(
+            children: [
+              Home(),
+              Icon(Icons.directions_bike),
+              Icon(Icons.directions_bike),
+              Icon(Icons.directions_bike),
+              Icon(Icons.directions_bike),
+            ],
+          ),
+          bottomNavigationBar: TabBar(
+            tabs: [
+              _buildTab(Icons.home, "Home", ColorsUtils.white),
+              _buildTab(Icons.travel_explore, "Explore", ColorsUtils.white),
+              _buildTab(Icons.favorite_border, "Favorites", ColorsUtils.white),
+              _buildTab(Icons.update, "Updates", ColorsUtils.white),
+              _buildTab(Icons.settings, "Settings", ColorsUtils.white),
+            ],
+            unselectedLabelColor: ColorsUtils.grey,
+            labelColor: ColorsUtils.lightBlue,
+          ),
+        ),
+      );
+    } else {
+      // Se o usuário não estiver logado, exiba a tela de login
+      return const Login();
+    }
   }
 }
 

@@ -7,7 +7,7 @@ routes = [
     {
         "endpoint": "/login",
         "methods": ["POST"],
-        "function": account_resource.register_account,
+        "function": account_resource.login,
     },
     {
         "endpoint": "/register",

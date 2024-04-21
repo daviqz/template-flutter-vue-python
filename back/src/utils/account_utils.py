@@ -31,3 +31,24 @@ def validate_fields_register_account(username, email, password, password_confirm
         field_errors.append(error)
 
     return {"is_valid": len(field_errors) == 0, "field_errors": field_errors}
+
+
+def validate_fields_login(email, password):
+    field_errors = []
+
+    if len(email) <= 4:
+        error = {
+            "message": "Email precisa conter mais de 4 caracteres",
+            "field": "username",
+            "type": "ERROR",
+        }
+        field_errors.append(error)
+    if len(password) <= 5:
+        error = {
+            "message": "A senha precisa conter mais de 5 caracteres",
+            "field": "email",
+            "type": "ERROR",
+        }
+        field_errors.append(error)
+
+    return {"is_valid": len(field_errors) == 0, "field_errors": field_errors}

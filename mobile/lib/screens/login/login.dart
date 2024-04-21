@@ -1,114 +1,125 @@
 import 'package:flutter/material.dart';
 import 'package:authorspace/utils/colors_utils.dart';
 import 'package:authorspace/service/service.dart';
+import 'package:authorspace/widgets/input_form.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
   @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    const String appTitle = 'LOGIN!';
-    return MaterialApp(
-      title: appTitle,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(appTitle),
+    return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Container(
+          color: ColorsUtils.lightBlue, // Cor de fundo da AppBar
+          alignment: Alignment.center,
+          child: const Text(
+            'Login',
+            style: TextStyle(
+              color: ColorsUtils.whitePrimary, // Cor do texto
+              fontSize: 20, // Tamanho do texto
+              fontWeight: FontWeight.bold, // Peso da fonte
+            ),
+          ),
         ),
-        body: const Center(
-          child: LoginForm(),
+      ),
+      backgroundColor: ColorsUtils.whitePrimary,
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              InputForm(
+                inputFieldValueController: _emailController,
+                labelText: 'Email',
+                hintText: 'Digite seu email',
+                icon: Icons.email,
+                keyboardType: TextInputType.emailAddress,
+                obscureText: false,
+              ),
+              const SizedBox(height: 30),
+              InputForm(
+                inputFieldValueController: _passwordController,
+                labelText: 'Senha',
+                hintText: 'Digite sua senha',
+                icon: Icons.lock,
+                keyboardType: TextInputType.text,
+                obscureText: true,
+              ),
+              const SizedBox(height: 50),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text(
+                  'Login com Google',
+                  style: TextStyle(
+                    color: ColorsUtils.blackLessDark,
+                  ), // Define a cor do texto do botão
+                ),
+              ),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/register');
+                },
+                child: const Text(
+                  'Registre-se',
+                  style: TextStyle(
+                    color: ColorsUtils.blackLessDark,
+                  ), // Define a cor do texto do botão
+                ),
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: ColorsUtils.whiteSecondary, // text color
+                    backgroundColor: ColorsUtils.blue,
+                    minimumSize: const Size(200, 50),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 20.0,
+                      horizontal: 40.0,
+                    ),
+                  ),
+                  onPressed: () {
+                    _login(
+                      _emailController.text,
+                      _passwordController.text,
+                    );
+                  },
+                  child: const Text(
+                    'Registrar',
+                    style: TextStyle(fontSize: 17),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class LoginForm extends StatelessWidget {
-  const LoginForm({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Email',
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Email',
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/register');
-            },
-            child: const Text(
-              'Login com Google',
-              style: TextStyle(
-                  color:
-                      ColorsUtils.whiteDark), // Define a cor do texto do botão
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: TextButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/register');
-            },
-            child: const Text(
-              'Registrar',
-              style: TextStyle(
-                  color:
-                      ColorsUtils.whiteDark), // Define a cor do texto do botão
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-          child: Center(child: EnterButton()),
-        ),
-      ],
-    );
-  }
-}
-
-class EnterButton extends StatelessWidget {
-  const EnterButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        fetchData();
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.lightBlue,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: const Text('Entrar'),
-      ),
-    );
-  }
-}
-
-void fetchData() async {
+void _login(email, password) async {
   try {
-    final response = await Service.post('/login', {});
+    final response = await Service.post('/login', {
+      'email': email,
+      'password': password,
+    });
+
     if (response.statusCode == 200) {
       print('Conteúdo da resposta: ${response.body}');
       // Faça o que quiser com o conteúdo da resposta aqui

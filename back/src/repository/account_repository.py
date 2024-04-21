@@ -17,11 +17,15 @@ from server import db
 
 
 class AccountRepository:
-    def register_account(self, username, email, password):
-        new_account = AccountModel(username, email, password, 1)
+    def register_account(self, username, email, hashed_password):
+        new_account = AccountModel(username, email, hashed_password)
         db.session.add(new_account)
         db.session.commit()
         return new_account
+
+    def get_account_by_email(self, email):
+        account = AccountModel.query.filter_by(email=email).first()
+        return account
 
     def get_user_by_id(self, user_id):
         # Use a instância do SQLAlchemy aqui

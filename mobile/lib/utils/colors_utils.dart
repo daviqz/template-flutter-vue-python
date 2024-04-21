@@ -8,6 +8,7 @@ class ColorsUtils {
   static const Color blackLessDark = Color.fromARGB(255, 14, 13, 13);
   static const Color purple = Colors.purple;
   static const Color white = Colors.white;
+  static const Color whitePrimary = Color.fromARGB(255, 236, 236, 236);
   static const Color whiteSecondary = Color.fromARGB(255, 231, 231, 231);
   static const Color whiteDark = Color.fromARGB(255, 218, 216, 216);
   static const Color whiteDarker = Color.fromARGB(255, 185, 185, 185);

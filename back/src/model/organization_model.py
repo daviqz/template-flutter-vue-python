@@ -1,4 +1,3 @@
-from datetime import datetime
 from server import db
 
 
@@ -11,9 +10,13 @@ class OrganizationModel(db.Model):
     id_account_creator = db.Column(
         db.Integer, db.ForeignKey("account.id"), nullable=False
     )
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-    deleted_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.sql.func.now())
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        server_default=db.sql.func.now(),
+        onupdate=db.sql.func.now(),
+    )
+    deleted_at = db.Column(db.DateTime(timezone=True))
 
     product_type = db.relationship("ProductType", back_populates="organization")
     account_creator = db.relationship("Account", back_populates="organization")

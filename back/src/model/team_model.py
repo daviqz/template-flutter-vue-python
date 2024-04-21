@@ -13,9 +13,11 @@ class TeamModel(db.Model):
     id_account_creator = db.Column(
         db.Integer, db.ForeignKey("account.id"), nullable=False
     )
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-    deleted_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime(timezone=True), default=datetime.now)
+    updated_at = db.Column(
+        db.DateTime(timezone=True), default=datetime.now, onupdate=datetime.now
+    )
+    deleted_at = db.Column(db.DateTime(timezone=True))
 
     organization = db.relationship("Organization", back_populates="team")
     account_creator = db.relationship("Account", back_populates="team")

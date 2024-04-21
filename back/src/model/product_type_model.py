@@ -8,6 +8,10 @@ class ProductTypeModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), nullable=False)
     description = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-    deleted_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.sql.func.now())
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        server_default=db.sql.func.now(),
+        onupdate=db.sql.func.now(),
+    )
+    deleted_at = db.Column(db.DateTime(timezone=True))

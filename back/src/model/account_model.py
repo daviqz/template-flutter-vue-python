@@ -1,4 +1,3 @@
-from datetime import datetime
 from server import db
 
 
@@ -10,9 +9,13 @@ class AccountModel(db.Model):
     email = db.Column(db.String(20), nullable=False)
     password = db.Column(db.String(50), nullable=False)
     id_account_view_type = db.Column(db.Integer, db.ForeignKey("account_type.id"))
-    created_at = db.Column(db.DateTime, default=datetime.now)
-    updated_at = db.Column(db.DateTime, default=datetime.now, onupdate=datetime.now)
-    deleted_at = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.sql.func.now())
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        server_default=db.sql.func.now(),
+        onupdate=db.sql.func.now(),
+    )
+    deleted_at = db.Column(db.DateTime(timezone=True))
 
     account_view_type = db.relationship("AccountType", back_populates="account")
 

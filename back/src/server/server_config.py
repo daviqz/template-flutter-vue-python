@@ -1,16 +1,30 @@
 import os
 import sys
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
-def server_config():
-    # Obtém o diretório pai deste script (onde está localizado o arquivo server_config.py)
+
+db = SQLAlchemy()
+
+
+def server_config(app):
+    # absolute path
     project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # Adiciona o diretório pai ao PYTHONPATH
     sys.path.append(project_dir)
 
-    # Se necessário, adicione outros diretórios ao PYTHONPATH
-    # sys.path.append(os.path.join(project_dir, 'subdiretorio'))
+    # cors
+    CORS(app)
 
-    # Configurações adicionais podem ser feitas aqui, como inicialização do aplicativo Flask, etc.
+    # database config
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+    )
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.init_app(app)
+    db.configure_mappers()
 
-if __name__ == "__main__":
-    server_config()
+    # migrations
+    migrate = Migrate(app, db)
+
+    return db, migrate

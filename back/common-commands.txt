@@ -1,15 +1,10 @@
 #### Create .venv folder
 python -m venv .venv
 
-#### Generate and install versions
-pip freeze > requirements.txt
-pip uninstall -r requirements.txt -y
-pip install -r requirements.txt
-
-#### Install/Uninstall dep
-pip install dep
-pip uninstall dep
-
+#### Install/Uninstall dep with poetry
+poetry add dep
+poetry remove dep
+poetry install
 
 #### Migration
 flask db init

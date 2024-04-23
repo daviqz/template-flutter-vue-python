@@ -1,9 +1,11 @@
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:authorspace/storage/local_storage.dart';
+import 'package:authorspace/config/config.dart';
+
+const String apiBaseUrl = apiBaseUrlLocal;
 
 class Service {
-  static final String baseUrl = dotenv.env['API_URL']!;
+  static const String baseUrl = apiBaseUrl;
 
   static Future<http.Response> get(String route) async {
     final url = Uri.parse('$baseUrl$route');

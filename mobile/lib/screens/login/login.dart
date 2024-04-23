@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
                     );
                   },
                   child: const Text(
-                    'Registrar',
+                    'Entrar',
                     style: TextStyle(fontSize: 17),
                   ),
                 ),
@@ -121,7 +121,7 @@ class _LoginState extends State<Login> {
 
 void _login(context, email, password) async {
   try {
-    final response = await Service.post('/login', {
+    final response = await Service.post('/account/login', {
       'email': email,
       'password': password,
     });

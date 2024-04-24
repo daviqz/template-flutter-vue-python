@@ -1,5 +1,5 @@
 from datetime import datetime
-from server import db
+from server.extensions import db
 
 
 class TeamModel(db.Model):

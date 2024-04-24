@@ -123,7 +123,7 @@ class _RegisterState extends State<Register> {
   void _register(String username, String email, String password,
       String passwordConfirm) async {
     try {
-      final response = await Service.post('/register', {
+      final response = await Service.post('/account/register', {
         'username': username,
         'email': email,
         'password': password,

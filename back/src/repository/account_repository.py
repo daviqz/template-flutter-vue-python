@@ -1,9 +1,9 @@
+from server.extensions import db
 from model.account_model import AccountModel
-
-from repository.extensions import db
-
 from model.account_type_model import AccountTypeModel
+
 from model.organization_model import OrganizationModel
+
 from model.product_type_model import ProductTypeModel
 from model.team_model import TeamModel
 from model.membership_model import MembershipModel

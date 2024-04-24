@@ -7,17 +7,20 @@ const String apiBaseUrl = apiBaseUrlLocal;
 class Service {
   static const String baseUrl = apiBaseUrl;
 
-  static Future<http.Response> get(String route) async {
+  static Future<http.Response> get(String route,
+      {Map<String, String>? headers}) async {
     final url = Uri.parse('$baseUrl$route');
-    String? authToken = await LocalStorage.getAuth();
-    final headers = {'Authorization': 'Bearer $authToken'};
-    return await http.get(url, headers: headers);
+
+    String? token = await LocalStorage.getAuthToken();
+
+    final defaultHeaders = {'Authorization': 'Bearer $token'};
+    final mergedHeaders = {...defaultHeaders, ...?headers};
+    return await http.get(url, headers: mergedHeaders);
   }
 
-  static Future<http.Response> post(String route, dynamic body) async {
+  static Future<http.Response> post(String route, dynamic body,
+      {Map<String, String>? headers}) async {
     final url = Uri.parse('$baseUrl$route');
-    String? authToken = await LocalStorage.getAuth();
-    final headers = {'Authorization': 'Bearer $authToken'};
-    return await http.post(url, body: body, headers: headers);
+    return await http.post(url, body: body);
   }
 }

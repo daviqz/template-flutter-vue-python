@@ -6,6 +6,9 @@ from loguru import logger
 from server.server_config import server_config
 from server.extensions import db, migrate
 from server.routes import setup_routes
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 load_dotenv()
 app = Flask(__name__)

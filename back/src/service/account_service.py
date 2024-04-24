@@ -41,3 +41,8 @@ class AccountService:
                     "account": account_dto.to_dictionary(),
                 }
         return None
+
+    def get_own_account_by_email(self, email):
+        account_found = self.account_repository.get_account_by_email(email)
+        account_dto = AccountDTO.from_model(account_found)
+        return account_dto.to_dictionary()

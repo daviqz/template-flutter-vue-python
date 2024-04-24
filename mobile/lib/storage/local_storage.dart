@@ -20,6 +20,16 @@ class LocalStorage {
     return _prefs.getString(_authKey);
   }
 
+  static Future<String?> getAuthToken() async {
+    String? authObjectJson = _prefs.getString(_authKey);
+    if (authObjectJson != null) {
+      Map<String, dynamic> authObjectMap = json.decode(authObjectJson);
+      return authObjectMap['token'];
+    }
+
+    return null; // Retorna null se a string JSON estiver vazia ou nula
+  }
+
   static Future<void> clearAuth() async {
     await _prefs.remove(_authKey);
   }

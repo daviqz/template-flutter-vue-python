@@ -1,11 +1,6 @@
 import os
-
-# import sys
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from loguru import logger
-
-logger.debug("That's it, beautiful and simple logging!")
 
 
 def server_config(app):

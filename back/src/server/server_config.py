@@ -1,5 +1,6 @@
 import os
-import sys
+
+# import sys
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from loguru import logger
@@ -8,9 +9,6 @@ logger.debug("That's it, beautiful and simple logging!")
 
 
 def server_config(app):
-    # absolute path
-    project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.append(project_dir)
     # cors
     CORS(app)
 

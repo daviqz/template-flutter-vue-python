@@ -14,16 +14,13 @@ Current features:<br>
 -ORM<br>
 -User password security<br>
 -Auth token<br>
+-WSGI<br>
 TODO:<br>
 -Improve the code<br>
 -Add WTForms<br>
 -Add logs with loguru<br>
 -Add email service<br>
 -Add unit tests<br>
--Add AWS/Azure full cloud architecture (I might do it last in a separate branch) (?)<br>
--Add gunicorn or similar (?)<br>
--Add Docker (?)<br>
--Add Kubernetes (?)<br>
 -Add metrics feature to show in the dashboard (?)<br>
 -Maybe more...<br>
 
@@ -36,11 +33,16 @@ Current features:<br>
 -Global State (Provider)<br>
 -Local storage - keep logged in (shared_preferences)<br>
 TODO:<br>
--Changes for a much better layout and code
+-Changes for a much better layout and code<br>
+-Add tests<br>
 -Create a dashboard screen (?)<br>
 -Add chart lib (fl_chart) (?)<br>
--Add tests<br>
 -Maybe more...<br>
 
 Vue:
 -Nothing yet<br>
+
+General:
+-Add AWS/Azure full cloud architecture (I might do it last in a separate branch) (?)<br>
+-Add Docker (?)<br>
+-Add Kubernetes (?)<br>

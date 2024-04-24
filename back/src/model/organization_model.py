@@ -1,4 +1,5 @@
-from server import db
+from server.extensions import db
+
 from model.association.account_organization_table_association import (
     account_organization_table_association,
 )

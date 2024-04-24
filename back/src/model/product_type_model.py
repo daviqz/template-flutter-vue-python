@@ -1,5 +1,4 @@
-from datetime import datetime
-from server import db
+from server.extensions import db
 
 
 class ProductTypeModel(db.Model):

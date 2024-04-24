@@ -2,9 +2,9 @@
 python -m venv .venv
 
 #### Install/Uninstall dep with poetry
-poetry add dep
-poetry remove dep
-poetry install
+pip freeze > requirements.txt
+pip install -r requirements.txt
+pip uninstall -r requirements.txt -y
 
 #### Migration
 flask db init

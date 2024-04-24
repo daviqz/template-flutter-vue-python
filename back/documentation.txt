@@ -1,3 +1,43 @@
+How to run this backend:
+
+# you need to make your pc ready for creating/running flask projects #
+# try using powershell and vscode if things don't work #
+
+# config
+0) Configure your postgres db props inside the .env
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_PORT=5432
+
+# after the config
+
+1) Enter the back directory: 
+cd back
+
+2) create the .venv folder:
+python -m venv .venv
+
+3) run the activate
+.\.venv\Scripts\activate
+
+4) install deps:
+pip install -r requirements.txt
+
+5) create the tables in db using models:
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+
+6) run:
+using the wsgi: python src\main.py
+using flask (you will need to change the api port in the frontend/mobile): flask run
+
+6.1) alternative run:
+use your code editor to run it
+
+Optional:
 Black formatter (vscode):
 -download Black formatter extension (microsoft verified)
 -on settings.json add: 
